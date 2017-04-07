@@ -1,0 +1,52 @@
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Resultado IMC</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/jqm/jquery.mobile-1.4.5.min.css" />	
+	<link rel="stylesheet" href="css/jqm/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="css/jqm/jquery.mobile.structure-1.4.5.min.css" />
+	<script src="js/jqm/jquery.js"></script>
+	<script src="js/jqm/jquery.mobile-1.4.5.min.js"></script>
+	
+</head>
+<body>
+	<div id="resultado" data-role="page">
+			<script type="text/javascript" src="resultado.js"></script>
+			<div data-role="header" data-position="fixed"> 				
+				<h1 >Resultado</h1>
+				<a href="main.html"  class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-corner-all">No text</a>
+			</div>
+			<div data-role="main" class="ui-content" >  
+				<div class="ui-corner-all custom-corners">
+				  <div class="ui-bar ui-bar-a">
+					 <h3>seu índice é:</h3>
+				  </div>
+				  <div class="ui-body ui-body-a">
+					 <p id="txtImc" 
+							style="text-align:center;font-size:4em;margin-top:2%;margin-bottom:0px"/>
+					</div>
+				</div>
+				<ul data-role="listview" data-inset="true">
+					 <li data-role="list-divider">
+							Abaixo de 17:
+					 </li> 	
+					 <li>
+					 	<p style="font-size:1em;margin:0px 0px">muito abaixo do peso</p>
+					 </li>
+					 <li data-role="list-divider">
+							Entre 17 e 18,49
+					 </li> 	
+					 <li>
+					 	<p style="font-size:1em;margin:0px 0px"">Abaixo do peso</p>
+					 </li>
+					 <li data-role="list-divider">
+							Entre 18,5 e 24,99
+					 </li> 	
+					 <li>
+					 	<p style="font-size:1em;margin:0px 0px"">peso normal</p>
+					 </li>
+				</ul>
+			</div>
+	</div>
+</body>

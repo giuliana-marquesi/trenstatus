@@ -1,0 +1,21 @@
+Mobile: 23-03-17
+
+ALterações a serem feitas no projeto:
+1- O projeto não testa:
+		a) intervalo de peso										|----------
+		b) intervalo de altura										| gerar um popup de erro
+		c) teclado alfanumérico(deixar somente um teclado numérico)	|----------
+		
+2- Unidades de medida não estão aparecendo na interface:
+		a) casas decimais de representação BR (vírgula) e conversão para float js
+
+3- Teclado do phone em numérico
+
+4- Completar o About:
+		a) Equipe layout, de conter uma imagem dos integrantes da equipe com um descrição do membro
+		b) Garantias pesquisar um texto/licensa
+		c) Motivação
+		
+5- Máscara no valor IMC do resultado na página "resultado"
+
+6- Uma tabela melhor(design) para explicação
