@@ -36,8 +36,3 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-# Cordova build archives
-
-platforms/android/res/xml/config.xml
-platforms/android/.gradle
-platforms/android/CordovaLib/build
