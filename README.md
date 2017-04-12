@@ -1,6 +1,6 @@
 # trenstatus
 
-## PRIMEIRAMENTE...##
+## PRIMEIRAMENTE... ##
 
 - Baixar este repositório. - através de git clone abaixo do diretório desejado ou baixando de forma gráfica (nunca fiz isso)
 ```
@@ -55,7 +55,7 @@ Para baixá-la, usei o código:
 docker pull beevelop/cordova:latest
 ```
 
-> ***OBS: A IMAGEM FICOU COM 38 GIGAS ***
+> **OBS: A IMAGEM FICOU COM 38 GIGAS **
 
 ### Fazendo run da imgem ###
 
@@ -119,5 +119,6 @@ cordova platform add android
 - O arquivo config.xml no diretório trenstatus/cordova/www precisa alterar a permissão, pois está somente leitura. No linux:
 
 ```
+cd [diretorio-pai]/tresnstatus/cordova/www
 sudo chmod 775 config.xml
 ```
