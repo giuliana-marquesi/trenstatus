@@ -10,14 +10,14 @@ git clone git@github.com:giuliana-marquesi/trenstatus.git
 - Preparar o ambiente. É necessário:
   * node (pode ser o 6 stable ou 7,meio arriscado mas é o que tem no docker e tá rodando)
   * npm
-  * cordova(6.5.0)
-  * SDK-Android (android-25;7.1.1)
   * git
+  * cordova(6.5.0) **- para usar o diretório cordova**
+  * SDK-Android (android-25;7.1.1) **-para usar o diretório cordova**
 
-> Como alternativa a instalar em seu ambiente host pode-se utilizar o docker, como será instruído a seguir na seção **Usando Docker com cordova**.
+- Seguir os README's correspondentes a cada diretório
 
-- Alterar a permissão do documento config.xml, como será descrito na seção **Notas**
-- Adicionar a plataforma android no projeto cordova, como será descrito na seção **Fazendo build a primeira vez**
+> Como alternativa a instalar em seu ambiente host todas as dependencias pode-se utilizar o docker, como será instruído a seguir na seção **Usando Docker com cordova**.
+
 
 ## USANDO DOCKER COM CORDOVA ##
 
@@ -62,7 +62,7 @@ docker pull beevelop/cordova:latest
 Após alguns testes cheguei no seguinte run:
 
 ```
-sudo docker run --name cordova --privileged -v /dev/bus/usb:/dev/bus/usb -d -v [CAMINHO DE ONDE ESTA A PASTA trenstatus]/trenstatus/cordova:/opt/trenstatus-cordova/ -t beevelop/cordova
+sudo docker run --name cordova --privileged -v /dev/bus/usb:/dev/bus/usb -p 5050:5050 -p 8000:8000 -d -v [CAMINHO DE ONDE ESTA A PASTA trenstatus]/trenstatus:/opt/trenstatus/ -t beevelop/cordova
 ```
 - `--name cordova`: é o nome do container
 - `--privileged`: é o que dá permissão para executar e acessar as portas usb
@@ -70,6 +70,7 @@ sudo docker run --name cordova --privileged -v /dev/bus/usb:/dev/bus/usb -d -v [
 - `-d`: é para deamonizar o docker, segui isso de um outro docker feito por um colega, mas não sei qual é a real função dele aqui
 - `-v ~/helo:/opt/hello`: monta o volume hello ouvindo o diretorio helo
 - `-t`: faz a run em modo terminal (não sei se é realmente necessario, poderia ser -d)
+- `-p 5050:5050`: espelha a porta 5050 para o host, o mesmo ocorre com o 8000
 
 ### Executando o container ###
 
@@ -83,40 +84,15 @@ Para executar:
 sudo docker exec -it cordova bash
 ```
 
-## Fazendo build e outras notas ##
-
-Para fazer build deve-se ir até o diretório montado. No caso do container docker:
-
+Caso o container não estiver rodando é preciso dar start
 ```
-cd /opt/trenstatus-cordova
+sudo docker start cordova
 ```
-> Caso seja outro diretório na sua máquina host:
- ```
-  cd [diretorio-pai]/trenstatus/cordova/
-  ```
-
-Ao chegar no diretório, pode-se realizar os comandos normais do cordova:
-
-```
-cordova run
-cordova platform add android
-```
-
-### Fazendo build a primeira vez ###
-
-Como o projeto cordova está apenas com a source (www) vista pelo git, o resto do projeto cordova está apenas inicializado.
-Deve-se adicionar uma plataforma ao projeto, no caso, Android.
-
-```
-cordova platform add android
-```
-
-> **NOTA: NESTE COMANDO ACREDITO NÃO SER BOM USAR O --SAVE, POIS ELE ADICIONA AO PROJETO (ARQUIVO .XML) AS CONFIGURAÇÕES ANDROID**
 
 ### Notas ###
 
-- O container docker deve ser apenas para rodar os comandos cordova, todas as modificações devem ser feitas no host
-- O arquivo config.xml no diretório trenstatus/cordova/www precisa alterar a permissão, pois está somente leitura. No linux:
+- O container docker deve ser apenas para rodar os comandos cordova e npm, todas as modificações devem ser feitas no host
+- O arquivo config.xml no diretório trenstatus/cordova/www pode precisar alterar a permissão, pois está somente leitura. No linux:
 
 ```
 cd [diretorio-pai]/tresnstatus/cordova/www
