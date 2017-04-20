@@ -1,0 +1,20 @@
+{
+  "name": "twitter-heroku",
+  "version": "1.0.0",
+  "description": "Repositorio para captar os twittes",
+  "main": "index.js",
+  "dependencies": {
+    "cors": "^2.8.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "ps": "0.0.2",
+    "twitter": "^1.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Time do TrenStatus",
+  "license": "ISC"
+}
