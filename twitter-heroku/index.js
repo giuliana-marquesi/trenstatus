@@ -17,15 +17,26 @@ app.use(cors(corsOptions));
 
 // https://dev.twitter.com/streaming/overview/request-parameters
 var queries = [
+  "@CPTM_oficial",
   "@CPTM_oficial #Informação",
+  "@CPTM_oficial #L1",
+  "@CPTM_oficial #L2",
+  "@CPTM_oficial #L3",
+  "@CPTM_oficial #L4",
+  "@CPTM_oficial #L5",
+  "@CPTM_oficial #L6",
+  "@CPTM_oficial #L7",
+  "@CPTM_oficial #L8",
+  "@CPTM_oficial #L9",
+  "@CPTM_oficial #L10",
+  "@CPTM_oficial #L11",
+  "@CPTM_oficial #L12",
+  "@CPTM_oficial linha",
   "#CPTM",
   "@metrosp_oficial",
   "#metrosp",
-  "@DiariodaCPTM",
-  "#cptm",
-  "#L1",
-  "#L2",
-  "metro"
+  "@DiariodaCPTM linha",
+  "#cptm"
 ];
 
 var queryString = queries.join(", ");
@@ -47,14 +58,13 @@ var client = new Twitter({
 client.stream('statuses/filter', {track: queryString, language: "pt"}, function(stream){
   stream.on('data', function(tweet) {
     var mText = tweet.text.replace(/RT /g, "");
-    mText = mText.replace(/["{}<>().!,;|\-]/g, "");
-    mText = mText.replace(/[#@]\S+/g, "");
-    mText = mText.replace(/http(s?):\/\/\S+/g, "");
-    mText = mText.replace(/b\/c/g, "because");
-    mText = mText.replace(/([a-zA-Z]+)\/([a-zA-Z]+)/g, "$1 $2");
-    mText = mText.replace(/\S+…/g, "");
-    mText = mText.replace(/\s+/g, " ");
-    mText = mText.trim();
+    //mText = mText.replace(/["{}<>().!,;|\-]/g, "");
+    //mText = mText.replace(/[#@]\S+/g, "");
+    //mText = mText.replace(/http(s?):\/\/\S+/g, "");
+    //mText = mText.replace(/([a-zA-Z]+)\/([a-zA-Z]+)/g, "$1 $2");
+    //mText = mText.replace(/\S+…/g, "");
+    //mText = mText.replace(/\s+/g, " ");
+    //mText = mText.trim();
 
     if(mText.length > 0) {
       console.log(mText);
