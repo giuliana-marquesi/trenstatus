@@ -25,21 +25,55 @@ var queries = [
   "@CPTM_oficial #L3",
   "@CPTM_oficial #L4",
   "@CPTM_oficial #L5",
-  "@CPTM_oficial #L6",
   "@CPTM_oficial #L7",
   "@CPTM_oficial #L8",
   "@CPTM_oficial #L9",
   "@CPTM_oficial #L10",
   "@CPTM_oficial #L11",
   "@CPTM_oficial #L12",
-  "@CPTM_oficial linha",
+  "@CPTM_oficial linha*",
+  "@CPTM_oficial estação",
   "#CPTM",
-  "@metrosp_oficial",
+  "@metrosp_oficial linha*",
+  "@metrosp_oficial estação",
   "#metrosp",
-  "@DiariodaCPTM linha",
-  "#cptm"
+  "@DiariodaCPTM linha*",
+  "@DiariodaCPTM estação",
+  "@Linha9_CPTM",
+  "@cptm linha*",
+  "@Linha4Amarela",
+  "@Linha4_Amarela",
+  "@Linha1Azul",
+  "@Linha1_Azul",
+  "@Linha2Verde",
+  "@Linha2_Verde",
+  "@Linha5Lilas",
+  "@Linha5_Lilas",
+  "@LilasLinha5",
+  "@Linha3Verde",
+  "@Linha3_Verde",
+  "@Linha7RubiGD",
+  "@Linha7_CPTM",
+  "@Linha8Diamante",
+  "@Linha8_CPTM",
+  "@Linha9Esmeralda",
+  "@Linha9_CPTM",
+  "@Linha10TurqueGD",
+  "@Linha10CPTM",
+  "@Linha10_CPTM",
+  "@Linha11Coral",
+  "@Linha11_CPTM",
+  "@Linha12SafiraGD",
+  "@Linha12_CPTM",
 ];
 
+var lines = [
+  "Azul",
+  "Vermelha",
+  "Amarela",
+  "Lilas",
+  "Verde"
+];
 var queryString = queries.join(", ");
 
 var insertIndex = 0;
@@ -58,7 +92,7 @@ var client = new Twitter({
 
 client.stream('statuses/filter', {track: queryString, language: "pt"}, function(stream){
   stream.on('data', function(tweet) {
-    var mText = tweet.text.replace(/RT /g, "");
+    //var mText = tweet.text.replace(/RT /g, "");
     //mText = mText.replace(/["{}<>().!,;|\-]/g, "");
     //mText = mText.replace(/[#@]\S+/g, "");
     //mText = mText.replace(/http(s?):\/\/\S+/g, "");
