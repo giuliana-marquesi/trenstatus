@@ -92,23 +92,14 @@ var client = new Twitter({
 
 client.stream('statuses/filter', {track: queryString, language: "pt"}, function(stream){
   stream.on('data', function(tweet) {
-    //var mText = tweet.text.replace(/RT /g, "");
-    //mText = mText.replace(/["{}<>().!,;|\-]/g, "");
-    //mText = mText.replace(/[#@]\S+/g, "");
-    //mText = mText.replace(/http(s?):\/\/\S+/g, "");
-    //mText = mText.replace(/([a-zA-Z]+)\/([a-zA-Z]+)/g, "$1 $2");
-    //mText = mText.replace(/\S+…/g, "");
-    //mText = mText.replace(/\s+/g, " ");
-    //mText = mText.trim();
-
-    if(mText.length > 0) {
-      console.log(mText);
-      if(mQueue.length < QUEUE_SIZE) {
-        mQueue.push(mText);
-      } else {
-        mQueue[insertIndex] = mText;
-        insertIndex = (insertIndex + 1)%mQueue.length;
-      }
+    var mText = tweet.text;
+    console.log(mText);
+    if(mQueue.length < QUEUE_SIZE) {
+      mText = selectTrainLine(mText);
+      mQueue.push(mText);
+    } else {
+      mQueue[insertIndex] = mText;
+      insertIndex = (insertIndex + 1)%mQueue.length;
     }
   });
 
@@ -117,6 +108,13 @@ client.stream('statuses/filter', {track: queryString, language: "pt"}, function(
     console.log(error);
   });
 });
+
+function selectTrainLine(mText) {
+  if(mText){
+    return mText;
+  }
+  return mText;
+};
 
 app.get('/AFT', function(req, res) {
   res.send(mQueue[popIndex]);

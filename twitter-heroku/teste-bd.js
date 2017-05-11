@@ -9,29 +9,20 @@ var texto = [
   "Atualização [18:32] L1 Saúde x Luz (exceto Sé) L2 V. Madalena x A. Rosa L3 paralisada L4 normal L5 normal L15 paralisada #metrosp,",
 ];
 
-var lines = [
-  /azul/g,
-  /verde/g,
-  /amarela/g,
-  /coral/g,
-  /lilas/g,
-  /linha7/g,
-  /linha8/g,
-  /linha9/g,
-  /turquesa/g,
-  /vermelha/g,
-  /l1/g,
-  /l3/g,
-  /l2/g,
-  /l4/g,
-  /l5/g,
-  /l7/g,
-  /l8/g,
-  /l9/g,
-  /l10/g,
-  /l11/g,
-  /l12/g,
-];
+var linha = {
+  azul: [/azul/g,/linha1/g, /l1/g],
+  verde: [/verde/g, /linha2/g, /l2/g,],
+  vermelha: [/vermelha/g, /linha3/g, /l3/g,],
+  amarela: [/amarela/g, /linha4/g, /l4/g,],
+  lilas: [/lilas/g, /linha5/g, /l5/g],
+  rubi: [/rubi/g, /linha7/g, /l7/g],
+  diamante: [/diamante/g, /linha8/g, /l8/g],
+  esmeralda: [/esmeralda/g, /linha9/g, /l9/g],
+  turquesa: [/turquesa/g, /linha10/g, /l10/g],
+  coral: [/coral/g, /linha11/g, /l11/g],
+  safira: [/safira/g, /linha12/g, /l12/g],
+  prata: [/prata/g, /linha15/g, /l15/g],
+};
 
 var mQueue = [
   "Unhappily submitting to the Machine destroys your soul not all at once but over time"
@@ -39,27 +30,28 @@ var mQueue = [
 
 for(var i = 0; i < texto.length; i++) {
   console.log("Texto antes da chamada no for" + texto[i]);
-  var text = selectTrainLine(texto[i]);
+  var text = arranjaTwittesPelaLinha(texto[i]);
   if(text) {
     console.log('tem texto');
     mQueue.push(text);
   }
 }
+
 console.log(mQueue);
 
-function selectTrainLine(mText) {
+function arranjaTwittesPelaLinha(tuite) {
   //console.log("texto dentro do selectTrainLine " + mText);
-  mText = mText.toLowerCase();
+  tuite = tuite.toLowerCase();
   //console.log("texto depois do lowercase" + mText);
-  _.each(lines, function(line) {
+  _.each(linha, function(line) {
     //console.log("texto no each: " + mText);
-    if(mText.match(line)){
+    if(tuite.match(line[0])){
       console.log("encontrado o termo " + line);
-      return mText;
+      return tuite;
     }
     else{
       console.log("ERR:Nao encontrado o termo " + line);
-      return mText;
+      return tuite;
     }
   });
 };
