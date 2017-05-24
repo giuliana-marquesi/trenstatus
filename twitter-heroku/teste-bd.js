@@ -1,6 +1,11 @@
 // versao para bd
 
 var _ = require('underscore');
+var pg = require('pg');
+var express = require('express');
+var dotenv = require('dotenv');
+
+var app = express();
 
 var texto = [
   "@CPTM_oficial os trens da linha turquesa voltaram a funcionar?,",
@@ -84,29 +89,28 @@ for(var i = 0; i < texto.length; i++) {
   }
 }
 
-console.log(mQueue);
+//console.log(mQueue);
 
 function arranjaTwittesPelaLinha(tuite) {
-  //console.log("texto dentro do selectTrainLine " + tuiteLimpo);
-  tuite = tuite.toLowerCase();
-  //console.log("texto depois do lowercase" + tuiteLimpo);
-  for(var nome_linha in linha) {
-    console.log(nome_linha);
-    valores = linha[nome_linha];
-    console.log(valores);
-    for(var i in valores){
-      var valor = valores[i];
-      console.log(valor);
-      if(tuite.match(valor)){
-        console.log("encontrada a linha " + nome_linha);
-        var tuiteLimpo = limpaTuite(tuite);
-        return tuiteLimpo;
-      }
-      else{
-        console.log("ERR:Nao encontrado o termo " + valor);
-      }
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    tuite = tuite.toLowerCase();
+    for(var nome_linha in linha) {
+      valores = linha[nome_linha];
+      console.log(nome_linha);
+      for(var i in valores){
+        var valor = valores[i];
+        if(tuite.match(valor)){
+          console.log("dentro do if: ", nome_linha);
+          var tuiteLimpo = limpaTuite(tuite);
+          client.query('insert into tuites (frase, data_postagem, linha) values ($1, $2, $3)', [tuiteLimpo, 'now()', nome_linha], function(err, result) {
+            done();
+            if (err)
+             { console.error(err) }
+          });
+        }
+      };
     };
-  };
+  });
 };
 
 function limpaTuite(tuite) {
@@ -121,3 +125,15 @@ function limpaTuite(tuite) {
     tuiteLimpo = tuiteLimpo.trim();
     return tuiteLimpo;
 }
+
+app.get('/DB', function (req, res) {
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query('SELECT * FROM tuite', function(err, result) {
+      done();
+      if (err)
+       { console.error(err); response.send("Error " + err); }
+      else
+       { res.send( {results: res.rows} ); }
+    });
+  });
+});

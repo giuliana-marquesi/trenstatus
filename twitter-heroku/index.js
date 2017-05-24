@@ -1,20 +1,10 @@
-var express = require('express');
-var cors = require('cors');
 var Twitter = require('twitter');
 var dotenv = require('dotenv');
 var _ = require('underscore');
+var pg = require('pg');
 
 dotenv.load();
 
-var port = process.env.PORT || 8080;
-var app = express();
-
-var corsOptions = {
-  origin: process.env.CORS_ORIGIN,
-  optionsSuccessStatus: 200
-};
-
-app.use(cors(corsOptions));
 
 // https://dev.twitter.com/streaming/overview/request-parameters
 var queries = [
@@ -101,14 +91,7 @@ var client = new Twitter({
 client.stream('statuses/filter', {track: queryString, language: "pt"}, function(stream){
   stream.on('data', function(tweet) {
     var mText = tweet.text;
-    if(mQueue.length < QUEUE_SIZE) {
-      mText = arranjaTwittesPelaLinha(mText);
-      mQueue.push(mText);
-      console.log(mText);
-    } else {
-      mQueue[insertIndex] = mText;
-      insertIndex = (insertIndex + 1)%mQueue.length;
-    }
+    mText = arranjaTwittesPelaLinha(mText);
   });
 
   stream.on('error', function(error) {
@@ -118,17 +101,26 @@ client.stream('statuses/filter', {track: queryString, language: "pt"}, function(
 });
 
 function arranjaTwittesPelaLinha(tuite) {
-  tuite = tuite.toLowerCase();
-  for(var nome_linha in linha) {
-    valores = linha[nome_linha];
-    for(var i in valores){
-      var valor = valores[i];
-      if(tuite.match(valor)){
-        var tuiteLimpo = limpaTuite(tuite);
-        return tuiteLimpo;
-      }
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    tuite = tuite.toLowerCase();
+    for(var nome_linha in linha) {
+      valores = linha[nome_linha];
+      console.log(nome_linha);
+      for(var i in valores){
+        var valor = valores[i];
+        if(tuite.match(valor)){
+          console.log("dentro do if: ", nome_linha);
+          var tuiteLimpo = limpaTuite(tuite);
+          client.query('insert into tuites (frase, data_postagem, linha) values ($1, $2, $3)', [tuiteLimpo, 'now()', nome_linha], function(err, result) {
+            done();
+            if (err)
+             { console.error(err) }
+            else { console.log(tuite);}
+          });
+        }
+      };
     };
-  };
+  });
 };
 
 function limpaTuite(tuite) {
@@ -136,25 +128,9 @@ function limpaTuite(tuite) {
     tuiteLimpo = tuiteLimpo.replace(/["{}<>().!,;|\-]/g, "");
     tuiteLimpo = tuiteLimpo.replace(/[#@]\S+/g, "");
     tuiteLimpo = tuiteLimpo.replace(/http(s?):\/\/\S+/g, "");
-    tuiteLimpo = tuiteLimpo.replace(/b\/c/g, "because");
     tuiteLimpo = tuiteLimpo.replace(/([a-zA-Z]+)\/([a-zA-Z]+)/g, "$1 $2");
     tuiteLimpo = tuiteLimpo.replace(/\S+…/g, "");
     tuiteLimpo = tuiteLimpo.replace(/\s+/g, " ");
     tuiteLimpo = tuiteLimpo.trim();
     return tuiteLimpo;
 }
-
-app.get('/AFT', function(req, res) {
-  res.send(mQueue[popIndex]);
-  popIndex = (popIndex + 1)%mQueue.length;
-});
-
-app.get('/AFTALL', function(req, res) {
-  var queueString = "";
-  for(var i=0; i<mQueue.length; i++) {
-    queueString += mQueue[i]+",<br>";
-  }
-  res.send(queueString);
-});
-
-app.listen(port);
