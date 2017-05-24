@@ -1,0 +1,16 @@
+{
+  "name": "rota-banco",
+  "version": "1.0.0",
+  "description": "Rota para pegar o banco",
+  "main": "rota-DB.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "trenstatus",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "pg": "^6.2.3"
+  }
+}
