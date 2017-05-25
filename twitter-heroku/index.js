@@ -1,3 +1,5 @@
+var express = require('express');
+var cors = require('cors');
 var Twitter = require('twitter');
 var dotenv = require('dotenv');
 var _ = require('underscore');
@@ -5,6 +7,15 @@ var pg = require('pg');
 
 dotenv.load();
 
+var port = process.env.PORT || 8080;
+var app = express();
+
+var corsOptions = {
+  origin: process.env.CORS_ORIGIN,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 // https://dev.twitter.com/streaming/overview/request-parameters
 var queries = [
@@ -91,7 +102,14 @@ var client = new Twitter({
 client.stream('statuses/filter', {track: queryString, language: "pt"}, function(stream){
   stream.on('data', function(tweet) {
     var mText = tweet.text;
-    mText = arranjaTwittesPelaLinha(mText);
+    if(mQueue.length < QUEUE_SIZE) {
+      mText = arranjaTwittesPelaLinha(mText);
+      mQueue.push(mText);
+      console.log(mText);
+    } else {
+      mQueue[insertIndex] = mText;
+      insertIndex = (insertIndex + 1)%mQueue.length;
+    }
   });
 
   stream.on('error', function(error) {
@@ -134,3 +152,19 @@ function limpaTuite(tuite) {
     tuiteLimpo = tuiteLimpo.trim();
     return tuiteLimpo;
 }
+
+app.get('/AFT', function(req, res) {
+  res.send(mQueue[popIndex]);
+  popIndex = (popIndex + 1)%mQueue.length;
+});
+
+app.get('/AFTALL', function(req, res) {
+  var queueString = "";
+  for(var i=0; i<mQueue.length; i++) {
+    queueString += mQueue[i]+",<br>";
+  }
+  res.send(queueString);
+});
+
+
+app.listen(port);
