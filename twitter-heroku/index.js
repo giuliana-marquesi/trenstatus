@@ -85,13 +85,6 @@ var linha = {
 
 var queryString = queries.join(", ");
 
-var insertIndex = 0;
-var popIndex = 0;
-var QUEUE_SIZE = 64;
-var mQueue = [
-  "Unhappily submitting to the Machine destroys your soul not all at once but over time"
-];
-
 var client = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
@@ -102,14 +95,7 @@ var client = new Twitter({
 client.stream('statuses/filter', {track: queryString, language: "pt"}, function(stream){
   stream.on('data', function(tweet) {
     var mText = tweet.text;
-    if(mQueue.length < QUEUE_SIZE) {
-      mText = arranjaTwittesPelaLinha(mText);
-      mQueue.push(mText);
-      console.log(mText);
-    } else {
-      mQueue[insertIndex] = mText;
-      insertIndex = (insertIndex + 1)%mQueue.length;
-    }
+    mText = arranjaTwittesPelaLinha(mText);
   });
 
   stream.on('error', function(error) {
@@ -152,19 +138,6 @@ function limpaTuite(tuite) {
     tuiteLimpo = tuiteLimpo.trim();
     return tuiteLimpo;
 }
-
-app.get('/AFT', function(req, res) {
-  res.send(mQueue[popIndex]);
-  popIndex = (popIndex + 1)%mQueue.length;
-});
-
-app.get('/AFTALL', function(req, res) {
-  var queueString = "";
-  for(var i=0; i<mQueue.length; i++) {
-    queueString += mQueue[i]+",<br>";
-  }
-  res.send(queueString);
-});
 
 
 app.listen(port);
