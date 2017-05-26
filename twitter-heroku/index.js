@@ -119,7 +119,10 @@ function arranjaTwittesPelaLinha(tuite) {
             done();
             if (err)
              { console.error(err) }
-            else { console.log(tuite);}
+            else {
+              console.log(tuite);
+              client.query('COMMIT', done);
+            }
           });
         }
       };
@@ -138,6 +141,5 @@ function limpaTuite(tuite) {
     tuiteLimpo = tuiteLimpo.trim();
     return tuiteLimpo;
 }
-
 
 app.listen(port);
