@@ -69,7 +69,7 @@ var queries = [
 ];
 
 var linha = {
-  azul: [/azul/g,/linha1/g, /l1/g],
+  azul: [/azul/g,"linha1 ", "l1 "],
   verde: [/verde/g, /linha2/g, /l2/g,],
   vermelha: [/vermelha/g, /linha3/g, /l3/g,],
   amarela: [/amarela/g, /linha4/g, /l4/g,],
@@ -141,5 +141,9 @@ function limpaTuite(tuite) {
     tuiteLimpo = tuiteLimpo.trim();
     return tuiteLimpo;
 }
+
+app.get('/', function (request, response) {
+ response.send ("Hello Cron!");
+});
 
 app.listen(port);

@@ -23,7 +23,7 @@ var texto = [
   "@CPTM_oficial Bom dia, a linha 12 safira ainda está paralisada?,",
   "#CPTM - 10:22:01 - Linha 9-Esmeralda - Operação Normal,",
   "@Direto_da_CPTM: #CPTM - 10:22:01 - Linha 9-Esmeralda - Operação Normal,",
-  "ATUALIZAÇÃO: L1 Luz x Paraíso L2 Clínicas x Paraíso L3 Paralisada L4 Normal L5 Normal #grevegeral #metrosp,",
+  "ATUALIZAÇÃO: #L1 Luz x Paraíso L2 Clínicas x Paraíso L3 Paralisada L4 Normal L5 Normal #grevegeral #metrosp,",
   "@Diegoferraz2421: @DiariodaCPTM linha 8 funcionando entre Osasco até a Barra Funda.,",
   "@Direto_do_Metro: #MetroSP - 10:18:01 - Linha 2-Verde - Operação Parcial - Devido à greve dos Metroviários o Met…,",
   "@governosp @geraldoalckmin_ @CPTM_oficial @metrosp_oficial PRIVATIZA JÁ!!!,",
@@ -32,7 +32,7 @@ var texto = [
   "@Diegoferraz2421: @DiariodaCPTM linha 8 funcionando entre Osasco até a Barra Funda.,",
   "@CPTM_oficial De póa a luz ainda não tem nada funcionando????,",
   "@CPTM_oficial A linha 9 esmeralda tá funcionando mesmo a partir da jurubatuba?,",
-  "Em Itaquera só gente de bem querendo ir trabalhar e o vagabundo do metrô ferrando o pessoal. Vergonha @metrosp_oficial,",
+  "Em Itaquera l11 só gente de bem querendo ir trabalhar e o vagabundo do metrô ferrando o pessoal. Vergonha @metrosp_oficial,",
   "@metrosp_oficial N tem graça em sp todo arrega .. ou para ou n para,",
   "ATUALIZAÇÃO: #L8 com operação parcial entre as estações Osasco e Barra Funda. @grupo_diario #CPTM | 10h24,",
   "@Linha8Diamante: ATUALIZAÇÃO: #L8 com operação parcial entre as estações Osasco e Barra Funda. @grupo_diario #CPTM | 10h24,",
@@ -40,14 +40,14 @@ var texto = [
   "@metrosp_oficial: 28/04/2017 10:18: #metrosp : Linha 2-Verde: Operação Parcial. Mais informações em,",
   "@Linha8Diamante: ATUALIZAÇÃO: #L8 com operação parcial entre as estações Osasco e Barra Funda. @grupo_diario #CPTM | 10h24,",
   "@metrosp_oficial: 28/04/2017 10:18: #metrosp : Linha 2-Verde: Operação Parcial. Mais informações em,",
-  "Linha 10 - turquesa da @CPTM_oficial indo apenas até o Brás e não até a Luz como foi noticiado. #GreveGeral,",
+  "Linha10 - turquesa da @CPTM_oficial indo apenas até o Brás e não até a Luz como foi noticiado. #GreveGeral,",
   "@cptmnoticiando: O comunicado que pode ser entregue como justificativa está disponível no link . #CPTM,",
   "@metrosp_oficial Linha azul tem possibilidade de voltat a funcionar normalmente hoje ainda?,",
   "@CPTM_oficial @sptrans_ Outra empresa que deveriam privatizar! A linha amarela do metro está lá, funcionando e atendendo o cidadão,",
   "@metrosp_oficial Amanha o metro funcionara normal?,",
   "@metrosp_oficial bom dia! A estacao vila prudente da linha verde esta funcionando?,",
   "Linha 8 acabou de abrir a catraca na Barra Funda até Osasco! 4 linhas da @CPTM_oficial começam a funcionar parcialmente,",
-  "#L8 dá #CPTM só começou rodar agora, primeiro trem com destino à #Osasco,",
+  "#L11 dá #CPTM só começou rodar agora, primeiro trem com destino à #Osasco,",
   "ATUALIZAÇÃO: #L9 com operação parcial entre as estações Jurubatuba e Pinheiros. @grupo_diario #CPTM | 10h28,",
   "@Wagner_Reid: #L8 dá #CPTM só começou rodar agora, primeiro trem com destino à #Osasco,",
   "@Linha9Esmeralda: ATUALIZAÇÃO: #L9 com operação parcial entre as estações Jurubatuba e Pinheiros. @grupo_diario #CPTM | 10h28,",
@@ -63,7 +63,7 @@ var texto = [
 ];
 
 var linha = {
-  azul: [/azul/g,/linha1/g, /l1/g],
+  azul: [/azul/g,"linha1 ", "l1 "],
   verde: [/verde/g, /linha2/g, /l2/g,],
   vermelha: [/vermelha/g, /linha3/g, /l3/g,],
   amarela: [/amarela/g, /linha4/g, /l4/g,],
@@ -102,7 +102,7 @@ function arranjaTwittesPelaLinha(tuite) {
         if(tuite.match(valor)){
           console.log("dentro do if: ", nome_linha);
           var tuiteLimpo = limpaTuite(tuite);
-          client.query('insert into tuites (frase, data_postagem, linha) values ($1, $2, $3)', [tuiteLimpo, 'now()', nome_linha], function(err, result) {
+          client.query('insert into teste (frase, data_postagem, linha) values ($1, $2, $3)', [tuiteLimpo, 'now()', nome_linha], function(err, result) {
             done();
             if (err)
              { console.error(err) }
@@ -125,15 +125,3 @@ function limpaTuite(tuite) {
     tuiteLimpo = tuiteLimpo.trim();
     return tuiteLimpo;
 }
-
-app.get('/DB', function (req, res) {
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query('SELECT * FROM tuite', function(err, result) {
-      done();
-      if (err)
-       { console.error(err); response.send("Error " + err); }
-      else
-       { res.send( {results: res.rows} ); }
-    });
-  });
-});
