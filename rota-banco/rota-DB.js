@@ -2,8 +2,10 @@ var express = require('express');
 var cors = require('cors');
 var dotenv = require('dotenv');
 var Client = require('pg').Client;
+var _ = require('underscore');
 
 dotenv.load();
+
 
 var client = new Client(process.env.DATABASE_URL);
 
@@ -18,13 +20,21 @@ var corsOptions = {
 client.connect();
 app.use(cors(corsOptions));
 
+var linhas = ['azul', 'verde', 'vermelha', 'amarela', 'lilas', 'rubi', 'diamante', 'esmeralda', 'turquesa', 'coral', 'safira', 'prata'];
+var query;
+var rows = [];
+
 app.get('/db', function (request, response) {
-  client.query('SELECT linha, COUNT(*) AS qtddTuites FROM tuites GROUP BY linha', function(err, result) {
-    if (err)
-     { console.error(err); response.send("Error " + err); }
-    else
-     { response.send(result.rows); }
+  var resultado_acumulado = '';
+  _.each(linhas, function(nome_linha) {
+    query = client.query('SELECT DISTINCT (frase), data_postagem, linha FROM tuites WHERE linha=$1 ORDER BY data_postagem DESC LIMIT 30', [nome_linha]);
+
+    query.on('row', function(row) {
+      rows.push(row);
+    });
+
   });
+  response.send(rows);
 });
 
 app.listen(port);
