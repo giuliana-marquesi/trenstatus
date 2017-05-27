@@ -27,7 +27,8 @@ app.use(cors(corsOptions));
 app.get('/db', function (request, response) {
   var resultado_acumulado = '';
   _.each(linhas, function(nome_linha) {
-    query = client.query('SELECT DISTINCT (frase), data_postagem, linha FROM tuites WHERE linha=$1 ORDER BY data_postagem DESC LIMIT 30', [nome_linha]);
+    query = client.query('SELECT * FROM (SELECT DISTINCT ON (frase) data_postagem, frase, linha FROM tuites WHERE linha=$1 LIMIT 30) q ORDER BY data_postagem DESC'
+, [nome_linha]);
 
     query.on('row', function(row) {
       rows.push(row);
