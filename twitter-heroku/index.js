@@ -2,7 +2,6 @@ var express = require('express');
 var cors = require('cors');
 var Twitter = require('twitter');
 var dotenv = require('dotenv');
-var _ = require('underscore');
 var pg = require('pg');
 
 dotenv.load();

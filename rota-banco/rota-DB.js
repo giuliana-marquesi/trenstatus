@@ -8,6 +8,10 @@ dotenv.load();
 
 
 var client = new Client(process.env.DATABASE_URL);
+var linhas = ['azul', 'verde', 'vermelha', 'amarela', 'lilas', 'rubi', 'diamante', 'esmeralda', 'turquesa', 'coral', 'safira', 'prata'];
+var query;
+var rows = [];
+
 
 var port = process.env.PORT || 8080;
 var app = express();
@@ -20,10 +24,6 @@ var corsOptions = {
 client.connect();
 app.use(cors(corsOptions));
 
-var linhas = ['azul', 'verde', 'vermelha', 'amarela', 'lilas', 'rubi', 'diamante', 'esmeralda', 'turquesa', 'coral', 'safira', 'prata'];
-var query;
-var rows = [];
-
 app.get('/db', function (request, response) {
   var resultado_acumulado = '';
   _.each(linhas, function(nome_linha) {
@@ -32,7 +32,6 @@ app.get('/db', function (request, response) {
     query.on('row', function(row) {
       rows.push(row);
     });
-
   });
   response.send(rows);
 });
