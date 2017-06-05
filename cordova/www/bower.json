@@ -1,0 +1,21 @@
+{
+  "name": "trenstatus",
+  "version": "0.0.1",
+  "authors": [
+    "Equipe Trenstatus"
+  ],
+  "dependencies": {
+    "angular": "~1.3.0",
+    "angular-route": "~1.3.0",
+    "materialize": "^0.98.2"
+  },
+  "description": "html5 hybrid app by cordova and angular.",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
