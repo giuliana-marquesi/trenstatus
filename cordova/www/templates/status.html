@@ -1,0 +1,50 @@
+<div class="row" style="margin-bottom: 0px;">
+  <ul class="tabs">
+    <li class="tab col s6 m6 l6"><a class="active" href="#trem">Trêm</a></li>
+    <li class="tab col s6 m6 l6"><a href="#metro">Metrô</a></li>
+  </ul>
+</div>
+<ul class="collection" id='trem' style="margin-top: 0px;">
+  <li ng-repeat="trem in tremList" class="collection-item avatar">
+    <a href="#/linha/{{trem.linha}}" style="color: inherit">
+      <i class="circle" ng-class="trem.linha"></i>
+      <span class="title">{{trem.id}} - {{trem.linha}}</span>
+      <p ng-show="trem.status[0]">Último Comentário: <br>
+        {{trem.status[0].frase}} <br>
+        {{trem.status[0].data_postagem | date}}
+      </p>
+      <p ng-show="!trem.status[0]">
+        Nenhum status encontrado!
+      </p>
+    </a>
+    <a ng-click="isFavorite(trem)" class="secondary-content">
+      <i ng-show="trem.favorite" class="material-icons">star</i>
+      <i ng-hide="trem.favorite" class="material-icons">stars</i>
+    </a>
+  </li>
+</ul>
+<ul class="collection" id='metro' style="margin-top: 0px;">
+  <li ng-repeat="metro in metroList" class="collection-item avatar">
+    <a href="#/linha/{{metro.linha}}" style="color: inherit">
+      <i class="circle" ng-class="metro.linha"></i>
+      <span class="title">{{metro.id}} - {{metro.linha}}</span>
+      <p ng-show="metro.status[0]">Último Comentário: <br>
+        {{metro.status[0].frase}} <br>
+        {{metro.status[0].data_postagem | date}}
+      </p>
+      <p ng-show="!metro.status[0]">
+        Nenhum status encontrado!
+      </p>
+    </a>
+    <a ng-click="isFavorite(metro)" class="secondary-content">
+      <i ng-show="metro.favorite" class="material-icons">star</i>
+      <i ng-hide="metro.favorite" class="material-icons">stars</i>
+    </a>
+  </li>
+</ul>
+
+<script>
+$(document).ready(function(){
+  $('ul.tabs').tabs();
+});
+</script>

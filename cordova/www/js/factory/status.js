@@ -1,20 +1,20 @@
-app.factory('Speakers', function($http) {
-        var speakerList;
+app.factory('Status', function($http) {
+        var statusList;
         var obj = {};
 
         obj = {
-            getSpeakers: function(callback) {
-                if (speakerList) {
-                    callback(speakerList);
+            getStatus: function(callback) {
+                if (statusList) {
+                    callback(statusList);
                     return false;
                 } else {
 
                 $http({
                     method: 'GET',
-                    url: 'data/speakers.json'
+                    url: 'http://agile-peak-78409.herokuapp.com/db'
                 }).success(function(data) {
                     // erros
-                    obj.saveSpeakers(data);
+                    obj.saveStatus(data);
                     callback(data);
 
                 }, function(error) {
@@ -22,8 +22,8 @@ app.factory('Speakers', function($http) {
                 })
             }
         },
-        saveSpeakers: function(data) {
-            speakerList = data;
+        saveStatus: function(data) {
+            statusList = data;
         }
     }
 

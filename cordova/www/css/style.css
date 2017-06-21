@@ -1,68 +1,51 @@
-*:not(input):not(textarea) {
-	-webkit-user-select: none;
-	-webkit-touch-callout: none;
+.Azul {
+	background-color: #0000ff !important;
 }
-html,
-body {
-	-webkit-text-size-adjust: none;
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-	-webkit-tap-highlight-color: transparent;
-}
-@-webkit-keyframes slidein {
-  from {
-   opacity: 0;
-  }
 
-  to {
-    opacity: 1;
-  }
+.Verde {
+	background-color: #008000 !important;
 }
-.app-content {
-  -webkit-animation-duration: 0.5s;
-  -webkit-animation-name: slidein;
+
+.Vermelha {
+	background-color: #e50000 !important;
 }
-.speaker {
-	width:200px;
-	margin:0 auto;
+
+.Amarela {
+	background-color: yellow !important;
 }
-.speaker-img {
-	width: 150px;
-	height:150px;
-	border-radius: 150px;
-	margin:0 auto;
-	background-size: 150px;
-	background-position: center;
-	background-repeat: no-repeat;
+
+.Lilás {
+	background-color: #b666d2 !important;
 }
-.speaker-info {
-	width:80%;
-	text-align: center;
-	margin:10px auto;
-	font-size: 13px;
+
+.Prata {
+	background-color: #c0c0c0 !important;
 }
-.speaker-bio {
-	text-align: left;
+
+.Rubi {
+	background-color: #843f5b !important;
 }
-.speaker-company {
-	font-weight: bold;
-	font-size: 15px;
+
+.Diamente {
+	background-color: #808080;
 }
-.speaker-info a {
-	font-size: 20px;
-	display: block;
-	height:10px;
-	margin:5px 0 0 0;
+
+.Esmeralda {
+	background-color: #50c878 !important;
 }
-.icon-gdg {
-	background: url(../img/gdg.jpg);
-	background-size: 25px;
-	background-position:4px 3px;
-	background-repeat:no-repeat;
+
+.Turquesa {
+	background-color: #3f888f !important;
 }
-#speaker {
-	margin-top:30px;
+
+.Coral {
+	background-color: #e0a380 !important;
 }
-.title-agenda {
-	line-height: 20px;
-	margin-bottom: 10px;
+
+.Safira {
+	background-color: #0f52ba !important;
+}
+
+.Jade {
+	background-color: #55c0a9 !important;
 }

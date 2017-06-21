@@ -1,0 +1,17 @@
+<ul class="collection" style="margin-top: 0px;">
+  <li ng-repeat="favorita in favoritas" class="collection-item avatar">
+    <a href="#/linha/{{favorita.linha}}" style="color: inherit">
+      <i class="circle" ng-class="favorita.linha"></i>
+      <span class="title">{{favorita.id}} - {{favorita.linha}}</span>
+      <p ng-show="favorita.status[0]">Último Comentário: <br>
+        {{favorita.status[0].frase}} <br>
+        {{favorita.status[0].data_postagem | date}}
+      </p>
+      <p ng-show="!favorita.status[0]">
+        Nenhum status encontrado!
+      </p>
+    </a>
+  </li>
+</ul>
+
+<p class="center" ng-show="!(favoritas.length > 0)">Não há linhas favoritas!</p>

@@ -8,17 +8,31 @@
 	<!-- APP STYLES -->
 	<link href="css/icon.css" rel="stylesheet">
 	<link type="text/css" rel="stylesheet" href="bower_components/materialize/dist/css/materialize.min.css"  media="screen,projection"/>
-	<link rel="stylesheet" href="bower_components/fries/dist/themes/holo-dark/holo-dark.min.css" />
+	<!-- <link rel="stylesheet" href="bower_components/fries/dist/themes/holo-dark/holo-dark.min.css" /> -->
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 <body ng-app='trenstatus'>
-	<div class="content">
+	<div class="content" ng-contoller="IndexController">
+		<nav>
+			<div class="nav-wrapper">
+				<a class="brand-logo center">{{title}}</a>
+				<a href="#" data-activates="slide-out" class="button-collapse show-on-medium-and-down show-on-large"><i class="material-icons">menu</i></a>
+			</div>
+		</nav>
+		<ul id="slide-out" class="side-nav">
+			<li><a href="#/favoritas"><i class="material-icons">star</i>Linhas favoritas</a></li>
+			<li><a href="#/status"><i class="material-icons">train</i>Status</a></li>
+			<!-- <li><a href="#!"><i class="material-icons">forward</i>Schedule</a></li>
+			<li><a href="#!"><i class="material-icons">forward</i>Minha localização</a></li>
+			<li><a href="#!"><i class="material-icons">forward</i>Mapa das linhas</a></li>
+			<li><a href="#!"><i class="material-icons">forward</i>Sobre</a></li> -->
+		</ul>
 		 <ng-view></ng-view>
  	</div>
-
 	<!-- APP DEPENDENCIES -->
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script src='bower_components/angular/angular.min.js'></script>
+	<script src='bower_components/angular-locale-pt-br/angular-locale_pt-br.js'></script>
 	<script src='bower_components/angular-route/angular-route.min.js'></script>
 	<script src="bower_components/materialize/dist/js/materialize.min.js"></script>
 
@@ -27,11 +41,20 @@
 
 	<!-- APP FACTORYS -->
 	<script src='js/factory/agenda.js'></script>
-	<script src='js/factory/speakers.js'></script>
+	<script src='js/factory/status.js'></script>
+	<script src='js/factory/linhas.js'></script>
+	<script src='js/factory/favoritas.js'></script>
 
 	<!-- APP CONTROLLERS -->
-	<script src='js/controllers/agenda.js'></script>
-	<script src='js/controllers/speaker.js'></script>
-	<script src='js/controllers/speakers.js'></script>
+	<script src='js/controllers/favoritas.js'></script>
+	<script src='js/controllers/status.js'></script>
+	<script src='js/controllers/linha.js'></script>
+	<script>
+		(function($){
+	    $(function(){
+	      $('.button-collapse').sideNav();
+	    });
+	  })(jQuery);
+	</script>
 </body>
 </html>

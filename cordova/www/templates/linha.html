@@ -1,0 +1,8 @@
+<ul class="collection" style="margin-top: 0px;">
+  <li ng-repeat="item in status" ng-show="status.length > 0" class="collection-item">
+    <p>{{item.frase}}</p>
+    <p>{{item.data_postagem | date}}</p>
+  </li>
+</ul>
+
+<p class="center" ng-show="!(status.length > 0)">Nenhum status encontrado!</p>
